@@ -1,6 +1,6 @@
 export * from './TileLayer';
 export * from './FeatureGroup';
-export * from './WmsLayer';
+export * from './TileLayerWms';
 export * from './Marker';
 export * from './GeoJson';
 export * from './Popup';
