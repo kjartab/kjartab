@@ -1,8 +1,7 @@
-import L, { LatLngExpression } from "leaflet";
+import L from "leaflet";
 import { LeafletMapContext } from "../core";
-import { createLeafletComponent } from "../hooks/useLeafletComponent"; 
-import { createLayer, destroyLayer, OtherProps } from "./common";
-import { LayerGroup } from "./LayerGroup";
+import { createLeafletComponent } from "../hooks/useLeafletComponent";
+import { destroyLayer, OtherProps } from "./common";
 
 export type PopupProps =  {  
     options?: L.PopupOptions

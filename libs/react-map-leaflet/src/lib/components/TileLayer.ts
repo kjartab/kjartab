@@ -21,4 +21,3 @@ export const TileLayer = createLeafletComponent<LTileLayer, TileLayerProps>({
         }
     }
 })
-
