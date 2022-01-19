@@ -1,0 +1,43 @@
+{
+  "root": "libs/react-map-leaflet",
+  "sourceRoot": "libs/react-map-leaflet/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/react-map-leaflet",
+        "tsConfig": "libs/react-map-leaflet/tsconfig.lib.json",
+        "project": "libs/react-map-leaflet/package.json",
+        "entryFile": "libs/react-map-leaflet/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "assets": [
+          {
+            "glob": "libs/react-map-leaflet/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-map-leaflet/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/react-map-leaflet"],
+      "options": {
+        "jestConfig": "libs/react-map-leaflet/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
