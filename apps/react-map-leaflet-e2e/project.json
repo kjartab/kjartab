@@ -1,0 +1,28 @@
+{
+  "root": "apps/react-map-leaflet-e2e",
+  "sourceRoot": "apps/react-map-leaflet-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/react-map-leaflet-e2e/cypress.json",
+        "devServerTarget": "react-map-leaflet:storybook"
+      },
+      "configurations": {
+        "ci": {
+          "devServerTarget": "react-map-leaflet:storybook:ci"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/react-map-leaflet-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["react-map-leaflet"]
+}

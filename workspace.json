@@ -3,6 +3,7 @@
   "projects": {
     "maps": "apps/maps",
     "maps-e2e": "apps/maps-e2e",
-    "react-map-leaflet": "libs/react-map-leaflet"
+    "react-map-leaflet": "libs/react-map-leaflet",
+    "react-map-leaflet-e2e": "apps/react-map-leaflet-e2e"
   }
 }
