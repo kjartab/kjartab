@@ -1,6 +1,6 @@
-import L from "leaflet";
-import { createLeafletComponent } from "../hooks/useLeafletComponent";
-import { createLayer, destroyLayer } from "./common";
+import L from "leaflet"; 
+import { createLeafletComponent } from "../../core/leafletComponent";
+import { createLayer, destroyLayer } from "../common";
 
 export type ImageOverlayProps = { 
     imageUrl: string, 
@@ -8,7 +8,7 @@ export type ImageOverlayProps = {
     & L.ImageOverlayOptions;
 
 export const ImageOverlay = createLeafletComponent<L.ImageOverlay, ImageOverlayProps>({
-    name: "TileLayer.Wms",
+    name: "ImageOverlay",
     create(context, props) {  
         const {imageUrl, bounds, ...options } = props;  
         const element = L.imageOverlay(imageUrl, bounds, options)

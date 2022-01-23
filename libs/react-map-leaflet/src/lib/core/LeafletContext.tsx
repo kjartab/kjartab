@@ -16,7 +16,7 @@ export type LeafletLayerContext ={
     layer?: L.Layer
 }
 
-export const LeafletContext = React.createContext<LeafletMapContext | undefined>(undefined);
+export const LeafletContext = React.createContext<any>(undefined);
 
 
 export const useLeaflet = (): LeafletMapContext => useContext(LeafletContext) || {};

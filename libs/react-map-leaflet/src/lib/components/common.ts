@@ -8,6 +8,7 @@ export type OtherProps = {
 
 
 export function createLayer(context: LeafletMapContext, layer: Layer) {     
+    console.log("create layer");
     const { featureGroup, layerGroup, leafletMap } = context;    
     if (featureGroup && !featureGroup.hasLayer(layer)) {
         featureGroup.addLayer(layer);
@@ -23,6 +24,7 @@ export function createLayer(context: LeafletMapContext, layer: Layer) {
 } 
 
 export function destroyLayer(context: LeafletMapContext, layer: Layer) {
+    console.log("destroy layer");
     const { featureGroup, layerGroup, leafletMap } = context;   
     if (featureGroup && featureGroup.hasLayer(layer)) { 
         featureGroup.removeLayer(layer); 

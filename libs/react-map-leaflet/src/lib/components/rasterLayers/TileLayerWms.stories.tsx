@@ -16,7 +16,7 @@ const Template: Story = (args) =>
         maxZoom={18} 
         minZoom={12} 
         format={"image/png"} 
-        layers='DTM_Skyggemodell' 
+        layers={'DTM_Skyggemodell'} 
         opacity={0.6}
         transparent={true} 
         bounds={new LatLngBounds([63.298322940154904, 10.04545530381227],[63.46114177810909, 10.740909239294403])}/>

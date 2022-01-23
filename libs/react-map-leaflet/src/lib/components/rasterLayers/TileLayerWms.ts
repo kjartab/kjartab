@@ -1,6 +1,6 @@
 import L from "leaflet";
-import { createLeafletComponent } from "../hooks/useLeafletComponent";
-import { createLayer, destroyLayer } from "./common";
+import { createLeafletComponent } from "../../core/leafletComponent"; 
+import { createLayer, destroyLayer, OtherProps } from "../common";
 
 export type WmsLayerProps = { url: string } & L.WMSOptions;
 

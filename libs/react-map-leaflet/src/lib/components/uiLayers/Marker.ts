@@ -1,7 +1,6 @@
-import L, { TileLayer as LTileLayer, Marker as LMarker, LatLngExpression, MarkerOptions, featureGroup, layerGroup } from "leaflet";
-import { LeafletContext } from "../core";
-import { createLeafletComponent } from "../hooks/useLeafletComponent"; 
-import { createLayer, destroyLayer, OtherProps } from "./common";
+import L, { LatLngExpression, Marker as LMarker, MarkerOptions } from "leaflet";
+import { createLeafletComponent } from "../../core/leafletComponent";
+import { createLayer, destroyLayer, OtherProps } from "../common";
 
 export type EventFn = (event: L.LeafletEvent) => void
 

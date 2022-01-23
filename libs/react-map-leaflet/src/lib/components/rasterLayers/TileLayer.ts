@@ -1,6 +1,6 @@
 import L, { TileLayer as LTileLayer, TileLayerOptions as LTileLayerOptions } from "leaflet";
-import { createLeafletComponent } from "../hooks/useLeafletComponent";
-import { createLayer, destroyLayer } from "./common";
+import { createLeafletComponent } from "../../core/leafletComponent"; 
+import { createLayer, destroyLayer, OtherProps } from "../common";
 
 export type TileLayerProps =  { url: string } & LTileLayerOptions;
 

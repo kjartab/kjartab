@@ -1,6 +1,6 @@
 import L, { TileLayer as LTileLayer, FeatureGroup as LFeatureGroup } from "leaflet";
-import { createLeafletComponent } from "../hooks/useLeafletComponent";
-import { createLayer, destroyLayer, OtherProps } from "./common";
+import { createLeafletComponent } from "../../core/leafletComponent"; 
+import { createLayer, destroyLayer, OtherProps } from "../common";
 
 
 export type FeatureGroupProps =  {

@@ -1,8 +1,7 @@
-import L, { LatLngExpression } from "leaflet";
-import { LeafletMapContext } from "../core";
-import { createLeafletComponent } from "../hooks/useLeafletComponent"; 
-import { createLayer, destroyLayer, OtherProps } from "./common";
-import { LayerGroup } from "./LayerGroup";
+import L from "leaflet";
+import { LeafletMapContext } from "../../core";
+import { createLeafletComponent } from "../../core/leafletComponent";
+import { destroyLayer, OtherProps } from "../common";
 
 export type PopupProps =  {  
     options?: L.PopupOptions
@@ -33,8 +32,7 @@ export function bindPopup(context: LeafletMapContext, popup: L.Popup) : L.Popup 
 export const Popup = createLeafletComponent<L.Popup, PopupProps>({
     name: "Popup",
     create(context, props) {   
-        const element = L.popup(props.options);
-        const { layer } = context;
+        const element = L.popup(props.options); 
         bindPopup(context, element);
         return element;  
     },
@@ -47,6 +45,6 @@ export const Popup = createLeafletComponent<L.Popup, PopupProps>({
     },
     destroy(element, context) {
         destroyLayer(context, element);
-    } 
+    }
 })
 

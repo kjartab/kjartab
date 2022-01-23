@@ -1,30 +1,7 @@
-import { Children, forwardRef, ForwardRefExoticComponent, ForwardRefRenderFunction, HTMLAttributes, PropsWithoutRef, ReactElement, RefAttributes, RefObject, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
-import { LeafletContext, LeafletMapContext, useLeaflet } from "../core/LeafletContext";
+import { RefObject, useCallback, useEffect, useImperativeHandle, useLayoutEffect, useRef, useState } from "react";
+import { Options } from "../core/leafletComponent";
+import { LeafletMapContext, useLeaflet } from "../core/LeafletContext";
 
-export type LeafletComponentRef<Element> = {
-    leafletElement?: Element;
-}; 
-  
-export type Options<Element, Props, State = any> = {
-    name: string;
-    create?: (
-      ctx:  LeafletMapContext,
-      props: Props
-    ) => Element | [Element, State] | undefined;  
-    destroy?: (
-        element: Element,
-        ctx: LeafletMapContext,
-        wrapperRef: HTMLDivElement | null,
-        state?: State
-      ) => void;
-    update?: (element: Element, props: Props, prevProps: Props, context: LeafletMapContext) => void;
-    provide?: (element: Element, ctx: LeafletMapContext, state?: State) => LeafletMapContext;
-  };
-
-export type LeafletComponentOptions<Element, Props, State = any> = Options<Element, Props, State> & { 
-    containerProps?: (keyof Props)[] | ((props: Props) => HTMLAttributes<HTMLDivElement>);
-    defaultProps?: Partial<Props>;
-};
 
 export const useLeafletComponent = <Element, Props, State = any>(
     { 
@@ -45,7 +22,7 @@ export const useLeafletComponent = <Element, Props, State = any>(
         const prevProps = useRef<Props>({} as Props);
         const [mounted, setMounted] = useState(false);
         const element = useRef<Element>();
-        const wrapperRef = useRef<HTMLDivElement>(null); 
+        const wrapperRef = useRef<HTMLDivElement>(null);
 
 
         
@@ -67,7 +44,7 @@ export const useLeafletComponent = <Element, Props, State = any>(
   );
 
         const mount = useCallback(() => { 
-            const result = create?.(ctx, props);
+            const result = create?.(ctx, props, wrapperRef.current);
             if (Array.isArray(result)) {
               element.current = result[0];
               stateRef.current = result[1];
@@ -134,39 +111,3 @@ export function shallowEquals<T>(a1: T | null | undefined, a2: T | null | undefi
     );
   }
   
-export const createLeafletComponent = <Element, Props, State = any>({  
-    containerProps,
-    defaultProps,
-    ...options
-} : LeafletComponentOptions<Element, Props, State>):  
-    ForwardRefExoticComponent<PropsWithoutRef<Props> & RefAttributes<LeafletComponentRef<Element>>> => { 
-        
-        const component: ForwardRefRenderFunction<LeafletComponentRef<Element>, Props> = (props, ref) => { 
-        const mergedProps = {
-            ...defaultProps,
-            ...props,
-        };
-        
-        const [ provided, mounted, wrapperRef ] = useLeafletComponent<Element, Props, State>(
-            options,
-            mergedProps,
-            ref);
-
-        const children = mounted ? (mergedProps.children as ReactElement) : null;
-        const wrappedChildren = (
-            <div
-              data-testid="resium-container"
-              ref={wrapperRef} > 
-              {children}
-            </div>
-          ) 
-        
-        if (provided) { 
-            return <LeafletContext.Provider value={provided}>{wrappedChildren}</LeafletContext.Provider>;
-        } 
-        return wrappedChildren;
-    } 
-    component.displayName = options.name;
-    
-    return forwardRef(component);
-}
