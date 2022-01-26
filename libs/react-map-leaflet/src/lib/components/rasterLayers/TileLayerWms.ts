@@ -1,4 +1,5 @@
 import L from "leaflet";
+import { LeafletMapContext } from "../../core";
 import { createLeafletComponent } from "../../core/leafletComponent"; 
 import { createLayer, destroyLayer, OtherProps } from "../common";
 
@@ -12,13 +13,8 @@ export const TileLayerWms = createLeafletComponent<L.TileLayer, WmsLayerProps>({
         createLayer(context, element); 
         return element;
     },
-    destroy(element, context) {
-        destroyLayer(context, element);
-    },
-    provide(element) { 
-        return {
-            layer: element
-        }
-    }
+    destroy : (element, context) => destroyLayer(context, element),
+    provide : (element) => ({ layer: element })
+    
 })
 

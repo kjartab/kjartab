@@ -14,14 +14,8 @@ export const ImageOverlay = createLeafletComponent<L.ImageOverlay, ImageOverlayP
         const element = L.imageOverlay(imageUrl, bounds, options)
         createLayer(context, element); 
         return element;
-    }, 
-    destroy(element, context) {
-        destroyLayer(context, element);
     },
-    provide(element) { 
-        return {
-            layer: element
-        }
-    }
+    destroy : (element, context) => destroyLayer(context, element),
+    provide : (element) => ({ layer: element })    
 })
 
