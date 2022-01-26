@@ -32,5 +32,46 @@ beforeEach(() => {
         expect(create).toBeCalledTimes(1);
         expect(ref.current?.leafletElement).toBe("foobar");
       });
+
+      it("should call destroy fn on unmounted", () => {
+        const destroy = jest.fn();
+        const value = { hoge: 1 };
+    
+        const Component = createLeafletComponent<string, { test: number }>({
+          name: "test",
+          create: () => "foobar",
+          destroy,
+        });
+    
+        render(
+          <LeafletContext.Provider value={value}>
+            <Component test={1} />
+          </LeafletContext.Provider>,
+        ).unmount();
+    
+        expect(destroy).toBeCalledWith("foobar", value, null, undefined);
+        expect(destroy).toBeCalledTimes(1);
+      });
+      
+      it("should update leaflet props", () => {
+        const leafletElement = {
+          foo: 0,
+        };
+    
+        const Component = createLeafletComponent<typeof leafletElement, { foo?: number }>({
+          name: "test",
+          create: () => leafletElement,
+          leafletProps: ["foo"],
+        });
+    
+        const { rerender } = render(<Component />);
+    
+        expect(leafletElement.foo).toBe(0);
+        
+        rerender(<Component foo={1} />);
+    
+        expect(leafletElement.foo).toBe(1);
+      });
+    
     
   });

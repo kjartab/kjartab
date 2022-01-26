@@ -14,14 +14,9 @@ export const VideoOverlay = createLeafletComponent<L.VideoOverlay, VideoOverlayP
         const element = L.videoOverlay(video, bounds, options)
         createLayer(context, element); 
         return element;
-    }, 
-    destroy(element, context) {
-        destroyLayer(context, element);
     },
-    provide(element) { 
-        return {
-            layer: element
-        }
-    }
+    destroy : (element, context) => destroyLayer(context, element),
+    provide : (element) => ({ layer: element })
+    
 })
 

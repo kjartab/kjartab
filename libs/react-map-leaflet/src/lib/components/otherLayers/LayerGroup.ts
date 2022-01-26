@@ -2,6 +2,7 @@ import L, { TileLayer as LTileLayer, LayerGroup as LLayerGroup } from "leaflet";
 import { createLeafletComponent } from "../../core/leafletComponent"; 
 import { createLayer, destroyLayer, OtherProps } from "../common";
 
+const immutableProps = ['options'] as const;
 
 export type LayerGroupProps =  {
     layers?: L.Layer[],
@@ -20,8 +21,7 @@ export const LayerGroup = createLeafletComponent<LLayerGroup, LayerGroupProps>({
     update(element, props, prevProps, context) { 
         // update
     },
-    destroy(element, context) {
-        destroyLayer(context, element);
-    }
+    destroy : (element, context) => destroyLayer(context, element), 
+    leafletImmutableProps: immutableProps
 })
 

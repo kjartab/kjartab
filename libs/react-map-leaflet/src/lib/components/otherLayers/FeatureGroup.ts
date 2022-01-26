@@ -3,6 +3,8 @@ import { createLeafletComponent } from "../../core/leafletComponent";
 import { createLayer, destroyLayer, OtherProps } from "../common";
 
 
+const immutableProps = ['options'] as const;
+
 export type FeatureGroupProps =  {
     layers?: L.Layer[],
     options?: L.LayerOptions,
@@ -13,18 +15,15 @@ export const FeatureGroup = createLeafletComponent<LFeatureGroup, FeatureGroupPr
     name: "FeatureGroup",
     create(context, props) { 
         const element = L.featureGroup(props.layers, props.options);
-        if (context.leafletMap) {
-            context.leafletMap.addLayer(element);
-        } 
+        createLayer(context, element);
         return element;
-    }, 
-    destroy(element, context) {
-        destroyLayer(context, element);
     },
+    destroy : (element, context) => destroyLayer(context, element),
     provide(element) {
         return { 
             featureGroup: element 
         }
-    }
+    }, 
+    leafletImmutableProps: immutableProps
 })
 

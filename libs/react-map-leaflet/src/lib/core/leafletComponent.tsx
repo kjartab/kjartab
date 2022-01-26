@@ -22,6 +22,8 @@ export type Options<Element, Props, State = any> = {
       ) => void;
     update?: (element: Element, props: Props, prevProps: Props, context: LeafletMapContext) => void;
     provide?: (element: Element, ctx: LeafletMapContext, state?: State) => LeafletMapContext;
+    leafletProps?: readonly (keyof Props)[]; 
+    leafletImmutableProps?: readonly (keyof Props)[];
   };
 
 
@@ -53,7 +55,6 @@ export const createLeafletComponent = <Element, Props, State = any>({
             ref);
         
         if (noChildren) return null;
-    
 
         const children = mounted ? (mergedProps.children as ReactElement) : null;
         const wrappedChildren = renderContainer ? (
@@ -67,7 +68,7 @@ export const createLeafletComponent = <Element, Props, State = any>({
             </div>
           ) : (
             children ?? null
-          ); 
+          );
         
         if (provided) { 
             return <LeafletContext.Provider value={provided}>{wrappedChildren}</LeafletContext.Provider>;

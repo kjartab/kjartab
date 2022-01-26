@@ -9,16 +9,13 @@ export const TileLayer = createLeafletComponent<LTileLayer, TileLayerProps>({
     create(context, props) {  
         const {url, ...options } = props;  
         const element = L.tileLayer(props.url, options);
-        createLayer(context, element); 
+        createLayer(context, element);
         return element;
     },
-    destroy(element, context) {
-        destroyLayer(context, element);
+    update(element, props, prevProps, context) {
+        
     },
-    provide(element) { 
-        return {
-            layer: element
-        }
-    }
+    destroy : (element, context) => destroyLayer(context, element),
+    provide : (element) => ({ layer: element })    
 })
 

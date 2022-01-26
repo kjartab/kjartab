@@ -21,8 +21,7 @@ export const MapContainer : React.FC<LeafletProps> = (props) => {
     }, [ref]); 
     
     return <div style={{height: "100vh"}} ref={ref}>
-        { leafletMap &&  <LeafletContext.Provider value={leafletMap ? { leafletMap: leafletMap as L.Map} : undefined}>{props.children}</LeafletContext.Provider>}
-      
+        { leafletMap && <LeafletContext.Provider value={leafletMap ? { leafletMap: leafletMap as L.Map} : undefined}>{props.children}</LeafletContext.Provider>}
     </div> 
 }
 

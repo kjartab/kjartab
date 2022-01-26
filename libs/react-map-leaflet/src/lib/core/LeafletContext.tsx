@@ -6,8 +6,7 @@ export type LeafletProps = {
 }
 
 export type LeafletMapContext = {
-    leafletMap?: L.Map,
-    parentLayer?: boolean
+    leafletMap?: L.Map
 } & LeafletLayerContext
 
 export type LeafletLayerContext ={
@@ -17,6 +16,5 @@ export type LeafletLayerContext ={
 }
 
 export const LeafletContext = React.createContext<any>(undefined);
-
 
 export const useLeaflet = (): LeafletMapContext => useContext(LeafletContext) || {};

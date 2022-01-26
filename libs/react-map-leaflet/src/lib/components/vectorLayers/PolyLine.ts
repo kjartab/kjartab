@@ -15,6 +15,11 @@ export const Polyline = createLeafletComponent<L.Polyline, PolylineProps>({
         createLayer(context, element);
         return element;
     }, 
+    update(element, props, prevProps, context) { 
+        if (props.options) {
+            element.options = props.options
+        }
+    },
     destroy(element, context) {
         destroyLayer(context, element);
     },
