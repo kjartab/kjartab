@@ -48,18 +48,18 @@ export const useLeafletComponent = <Element, Props, State = any>(
         if (includes(leafletProps, k)) {
           target[k] = newValue;
         } else if (includes(leafletImmutableProps, k)) {
-          updatedImmutableProps.push(k); 
-          console.log("immutable", k);
+          updatedImmutableProps.push(k);  
         }        
       }
           
-      if (update && mountedRef.current) { 
+      if (update && mountedRef.current) {
         update(element.current, props, prevProps.current, ctx);
-      } 
+      }
       
       prevProps.current = props;
       initialProps.current = props;
-      console.log(mountedRef.current, updatedImmutableProps);
+      
+      
       // Recreate leaflet element when any read-only prop is updated
       if (mountedRef.current && updatedImmutableProps.length > 0) {
 
@@ -69,8 +69,8 @@ export const useLeafletComponent = <Element, Props, State = any>(
               ", ",
             )}`,
           );
-        }
-        console.log("mount and unmount", name)
+        } 
+
         unmount();
         mount();
       }
@@ -79,36 +79,37 @@ export const useLeafletComponent = <Element, Props, State = any>(
   );
 
     const mount = useCallback(() => { 
-        const result = create?.(ctx, props, wrapperRef.current);
-        if (Array.isArray(result)) {
-          element.current = result[0];
-          stateRef.current = result[1];
-        } else {
-          element.current = result;
-        } 
-        if (provide && element.current) {
-            const provideRes = provide(element.current, ctx, stateRef.current); 
-            provided.current = { ...ctx, ...provideRes}; 
-        } 
-        prevProps.current = initialProps.current;
+      const result = create?.(ctx, initialProps.current, wrapperRef.current);
+      if (Array.isArray(result)) {
+        element.current = result[0];
+        stateRef.current = result[1];
+      } else {
+        element.current = result;
+      }
+      
+  
+      prevProps.current = initialProps.current;
+
+        
+      if (provide && element.current) {
+        provided.current = { ...ctx, ...provide(element.current, ctx, stateRef.current) };
+      }
+  
     
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const unmount = useCallback(() => {
-        // Destroy leaflet element
-        
-        if (element.current && destroy) {
-          destroy(element.current, ctx as LeafletMapContext, wrapperRef.current, stateRef.current);
-        }
-        
-        provided.current = undefined;
-        stateRef.current = undefined;
-        element.current = undefined;
-
-        setMounted(false);
-        mountedRef.current = false;
-                
-            
+      if (element.current && destroy) {
+        destroy(element.current, ctx, wrapperRef.current, stateRef.current);
+      }
+      
+   
+      provided.current = undefined;
+      stateRef.current = undefined;
+      element.current = undefined;
+  
+      setMounted(false);
+      mountedRef.current = false;
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
     // Detach all events 
 
@@ -120,15 +121,17 @@ export const useLeafletComponent = <Element, Props, State = any>(
     
     // Update properties of leaflet element
     useEffect(() => {
-        if (mounted) {
-            updateProperties(props);
-        } else {
-            // first time 
-            prevProps.current = props;
-            initialProps.current = props;
-            setMounted(true);
-            mountedRef.current = true;
+      if (mounted) {
+        if (!shallowEquals(props, prevProps.current)) {
+          updateProperties(props);
         }
+      } else {
+        // first time
+        prevProps.current = props;
+        initialProps.current = props;
+        setMounted(true);
+        mountedRef.current = true;
+      }
     }, [mounted, props, updateProperties]);
     
     // Expose leaflet element

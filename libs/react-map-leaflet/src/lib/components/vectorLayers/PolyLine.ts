@@ -8,6 +8,8 @@ export type PolylineProps =  {
     
  } & OtherProps; 
 
+ const immutableProps = ['options'] as const; 
+
 export const Polyline = createLeafletComponent<L.Polyline, PolylineProps>({
     name: "Polyline",
     create(context, props) { 
@@ -15,10 +17,7 @@ export const Polyline = createLeafletComponent<L.Polyline, PolylineProps>({
         createLayer(context, element);
         return element;
     }, 
-    update(element, props, prevProps, context) { 
-        if (props.options) {
-            element.options = props.options
-        }
+    update(element, props, prevProps, context) {  
     },
     destroy(element, context) {
         destroyLayer(context, element);
@@ -27,6 +26,7 @@ export const Polyline = createLeafletComponent<L.Polyline, PolylineProps>({
         return {
             layer: element
         }
-    }
+    },
+    leafletImmutableProps: immutableProps
 })
 
